@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface ProductService {
     public List<ProductInformation> getProductInformation(String product);
+
 }
