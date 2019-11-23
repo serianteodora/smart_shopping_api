@@ -6,6 +6,7 @@ import com.orangejuice.SmartShoppingAPI.product.service.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.GET;
@@ -20,6 +21,13 @@ public class ProductResource {
     @Autowired
     public ProductResource(ProductService productService) {
         this.productService = productService;
+    }
+
+    @GET
+    @Path("/index")
+    @Produces(MediaType.APPLICATION_JSON_VALUE)
+    public String index() {
+        return "Greetings from Spring Boot!";
     }
 
     @GET
