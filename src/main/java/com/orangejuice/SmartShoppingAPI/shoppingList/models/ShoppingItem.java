@@ -29,4 +29,10 @@ public class ShoppingItem {
     private String name;
     @Column(name = "amount")
     private int amount;
+
+    public ShoppingItem(UUID id, String name, int amount) {
+        this.id = id;
+        this.name = name;
+        this.amount = amount;
+    }
 }
