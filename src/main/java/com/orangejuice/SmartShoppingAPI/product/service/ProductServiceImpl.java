@@ -1,16 +1,30 @@
 package com.orangejuice.SmartShoppingAPI.product.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.SSLContext;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 @Slf4j
@@ -28,11 +42,49 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductInformation> getProductInformation(String product) {
         log.debug("Retrieving the product information for {}", product);
+//        Properties props = new Properties();
+//        props.setProperty("http.proxyHost=giba-proxy.wps.ing.net http.proxyPort=8080");
+        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+
+        SSLContext sslContext = null;
+        try {
+            sslContext = org.apache.http.ssl.SSLContexts.custom()
+                    .loadTrustMaterial(null, acceptingTrustStrategy)
+                    .build();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(csf)
+                .build();
+
+        HttpComponentsClientHttpRequestFactory requestFactory =
+                new HttpComponentsClientHttpRequestFactory();
+
+        requestFactory.setHttpClient(httpClient);
+
+        this.restTemplate.setRequestFactory(requestFactory);
+        //RestTemplate restTemplate = new RestTemplate(requestFactory);
+
         String url = productCatalogUrl+"?prodname={product}";
 
-        log.debug("The URL for retrieving user information is {}", url);
-        ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url, HttpMethod.GET, null,
+        log.info("The URL for retrieving user information is {}", url);
+        ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url.trim(), HttpMethod.GET, null,
                 new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
         return response.getBody();
+    }
+
+
+
+    public String getApis() {
+        String url = "https://api.test.touchpoint.ing.net/apis";
+        return this.restTemplate.getForObject(url, String.class);
     }
 }
