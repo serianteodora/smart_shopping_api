@@ -1,4 +1,4 @@
-package com.orangejuice.SmartShoppingAPI;
+package com.orangejuice.SmartShoppingAPI.shoppingList;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import java.util.UUID;
 @Builder
 @Getter
 public class ShoppingItemVO {
-    private UUID id;
     private String name;
-    private String description;
+    private int amount;
 }
 

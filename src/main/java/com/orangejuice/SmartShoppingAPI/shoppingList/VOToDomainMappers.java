@@ -1,4 +1,6 @@
-package com.orangejuice.SmartShoppingAPI;
+package com.orangejuice.SmartShoppingAPI.shoppingList;
+
+import com.orangejuice.SmartShoppingAPI.shoppingList.models.ShoppingItem;
 
 import java.util.UUID;
 
@@ -8,7 +10,7 @@ public class VOToDomainMappers {
         return ShoppingItem.builder()
                 .id(UUID.randomUUID())
                 .name(shoppingItemVO.getName())
-                .description(shoppingItemVO.getDescription())
+                .amount(shoppingItemVO.getAmount())
                 .build();
     }
 }

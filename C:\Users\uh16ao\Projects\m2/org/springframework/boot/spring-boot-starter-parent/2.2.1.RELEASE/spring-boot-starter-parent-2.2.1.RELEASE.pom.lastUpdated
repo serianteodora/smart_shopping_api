@@ -1,0 +1,9 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sat Nov 23 16:02:06 EET 2019
+https\://maven.google.com/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:2.2.1.RELEASE from/to google (https\://maven.google.com/)\: Host name may not contain blanks
+@default-google-https\://maven.google.com/.lastUpdated=1574517249215
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1574517314226
+@default-google-https\://repo.maven.apache.org/maven2/.lastUpdated=1574517726090
+469440ce68ae1faa25850d5021ebe3f65b4a09b2@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1574517726107
+@default-default-https\://repo.maven.apache.org/maven2/.lastUpdated=1574517726099
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:2.2.1.RELEASE from/to central (https\://repo.maven.apache.org/maven2)\: Host name may not contain blanks
