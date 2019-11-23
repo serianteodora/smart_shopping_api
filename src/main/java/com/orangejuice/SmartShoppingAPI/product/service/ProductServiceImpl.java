@@ -28,11 +28,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductInformation> getProductInformation(String product) {
         log.debug("Retrieving the product information for {}", product);
-        String url = String.format("%s/%s/", productCatalogUrl, product);
+        String url = productCatalogUrl+"?prodname={product}";
 
         log.debug("The URL for retrieving user information is {}", url);
         ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<ProductInformation>>() {});
+                new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
         return response.getBody();
     }
 }

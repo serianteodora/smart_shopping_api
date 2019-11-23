@@ -27,6 +27,8 @@ public class ShoppingItemsResource {
                 .stream()
                 .map(shoppingItem -> DomainToVOMappers.toShoppingItemVO(shoppingItem))
                 .collect(Collectors.toList());
+        shoppingItemsList.forEach(shoppingItemVO ->
+                log.info("shopping item:", shoppingItemVO));
         return ShoppingListVO.builder()
                 .shoppingList(shoppingItemsList)
                 .build();
