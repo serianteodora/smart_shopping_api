@@ -32,7 +32,7 @@ public class ProductResource {
     }
 
     @GetMapping("/{prodname}")
-    public List<ProductInformation> getProductInformation(@RequestParam(name = "prodname", required = false, defaultValue = "lapte") String productName) {
+    public String getProductInformation(@RequestParam(name = "prodname", required = false, defaultValue = "lapte") String productName) {
         try {
             return productService.getProductInformation(productName);
         } catch (KeyStoreException e) {

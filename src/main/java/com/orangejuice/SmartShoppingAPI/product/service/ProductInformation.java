@@ -1,5 +1,6 @@
 package com.orangejuice.SmartShoppingAPI.product.service;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,10 @@ import lombok.Getter;
 @Getter
 @Builder
 public class ProductInformation {
-    private String id;
-    private String name;
+    @JsonProperty
+    private String items;
+//    @JsonProperty
+//    private String id;
+//    @JsonProperty
+//    private String name;
 }

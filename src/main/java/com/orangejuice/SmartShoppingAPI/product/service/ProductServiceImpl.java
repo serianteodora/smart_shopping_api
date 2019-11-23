@@ -1,5 +1,7 @@
 package com.orangejuice.SmartShoppingAPI.product.service;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -40,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductInformation> getProductInformation(String product) {
+    public String getProductInformation(String product){
         log.debug("Retrieving the product information for {}", product);
 //        Properties props = new Properties();
 //        props.setProperty("http.proxyHost=giba-proxy.wps.ing.net http.proxyPort=8080");
@@ -72,13 +74,16 @@ public class ProductServiceImpl implements ProductService {
 
         this.restTemplate.setRequestFactory(requestFactory);
         //RestTemplate restTemplate = new RestTemplate(requestFactory);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 
         String url = productCatalogUrl+"?prodname={product}";
 
         log.info("The URL for retrieving user information is {}", url);
-        ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url.trim(), HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
-        return response.getBody();
+//        ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url.trim(), HttpMethod.GET, null,
+//                new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
+        return this.restTemplate.getForObject(url, String.class, product);
+        //return response.getStatusCode().getReasonPhrase();//.getBody();
     }
 
 

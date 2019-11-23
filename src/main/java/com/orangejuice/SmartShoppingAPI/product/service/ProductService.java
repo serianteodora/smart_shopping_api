@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public interface ProductService {
-    List<ProductInformation> getProductInformation(String product) throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException;
+    String getProductInformation(String product) throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException;
 
     String getApis();
 }
