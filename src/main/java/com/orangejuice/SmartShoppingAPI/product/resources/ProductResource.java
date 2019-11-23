@@ -27,8 +27,8 @@ public class ProductResource {
         return "Greetings from Spring Boot!";
     }
 
-    @GetMapping("/{prodname}")
-    public List<ProductInformation> getProductInformation(@RequestParam(name = "prodname", required = false, defaultValue = "lapte") String productName) {
-        return productService.getProductInformation(productName);
-    }
+//    @GetMapping("/{prodname}")
+//    public List<ProductInformation> getProductInformation(@RequestParam(name = "prodname", required = false, defaultValue = "lapte") String productName) {
+//        return productService.getProductInformation(productName);
+//    }
 }

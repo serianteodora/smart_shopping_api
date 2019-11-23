@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IShoppingItemsService {
     List<ShoppingItem> findAllShoppingItems();
+    void saveShoppingList(List<ShoppingItem> shoppingItems);
+    ShoppingItem saveShoppingItem(ShoppingItem shoppingItem);
 }

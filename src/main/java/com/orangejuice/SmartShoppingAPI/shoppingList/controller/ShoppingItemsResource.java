@@ -1,14 +1,22 @@
 package com.orangejuice.SmartShoppingAPI.shoppingList.controller;
 
+import com.fasterxml.jackson.databind.deser.CreatorProperty;
 import com.orangejuice.SmartShoppingAPI.shoppingList.DomainToVOMappers;
 import com.orangejuice.SmartShoppingAPI.shoppingList.ShoppingItemVO;
 import com.orangejuice.SmartShoppingAPI.shoppingList.ShoppingListVO;
+import com.orangejuice.SmartShoppingAPI.shoppingList.VOToDomainMappers;
 import com.orangejuice.SmartShoppingAPI.shoppingList.models.ShoppingItem;
 import com.orangejuice.SmartShoppingAPI.shoppingList.service.IShoppingItemsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -21,7 +29,7 @@ public class ShoppingItemsResource {
     @Autowired
     private IShoppingItemsService shoppingItemsService;
 
-    @GetMapping("/listShoppingItems")
+    @RequestMapping(value="/listShoppingItems", method = RequestMethod.GET)
     public ShoppingListVO findShoppingItems() {
         List<ShoppingItemVO> shoppingItemsList = shoppingItemsService.findAllShoppingItems()
                 .stream()
@@ -34,26 +42,18 @@ public class ShoppingItemsResource {
                 .build();
     }
 
-//    private List<ShoppingItem> shoppingList = new ArrayList<>();
-//
-//    @GetMapping("/shoppingList")
-//    public ShoppingListVO getShoppingList() {
-//        ShoppingListVO.ShoppingListVOBuilder builder = ShoppingListVO.builder();
-//        shoppingList.stream().forEach(shoppingItem -> builder.shoppingItem(DomainToVOMappers.toShoppingItemVO(shoppingItem)));
-//        return builder.build();
-//    }
-//
-//    @PostMapping("/shoppingList")
-//    public void addToShoppingList(@RequestBody ShoppingItemVO shoppingItemVO) {
-//        shoppingList.add(VOToDomainMappers.toShoppingItem(shoppingItemVO));
-//    }
-//
-//    @DeleteMapping("/shoppingList/{id}")
-//    public void deleteFromShoppingList(@PathVariable UUID id) {
-//        Optional<ShoppingItem> foundShoppingItem =
-//                shoppingList.stream().filter(shoppingItem -> shoppingItem.getId().equals(id)).findFirst();
-//        if (foundShoppingItem.isPresent()) {
-//            shoppingList.remove(foundShoppingItem.get());
-//        }
-//    }
+    @RequestMapping(value="/shoppingItems", method = RequestMethod.POST)
+    public ResponseEntity<?> addShoppingItems(@RequestBody ShoppingListVO shoppingList) {
+        List<ShoppingItem> shoppingItemsList = shoppingList.getShoppingList().stream()
+                .map(shoppingItem -> VOToDomainMappers.toShoppingItem(shoppingItem))
+                .collect(Collectors.toList());
+        shoppingItemsService.saveShoppingList(shoppingItemsList);
+        return new ResponseEntity<>(shoppingItemsList, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value="/shoppingItem", method = RequestMethod.POST)
+    public ResponseEntity<?> addShoppingItem(@RequestBody ShoppingItemVO shoppingItemVO) {
+        ShoppingItem shoppingItem = shoppingItemsService.saveShoppingItem(VOToDomainMappers.toShoppingItem(shoppingItemVO));
+        return new ResponseEntity<>(shoppingItem, HttpStatus.CREATED);
+    }
 }

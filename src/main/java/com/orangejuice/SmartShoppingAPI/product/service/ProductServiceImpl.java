@@ -31,8 +31,8 @@ public class ProductServiceImpl implements ProductService {
         String url = productCatalogUrl+"?prodname={product}";
 
         log.debug("The URL for retrieving user information is {}", url);
-        ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
-        return response.getBody();
+       // ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url, HttpMethod.GET, null,
+        //        new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
+        return null;
     }
 }

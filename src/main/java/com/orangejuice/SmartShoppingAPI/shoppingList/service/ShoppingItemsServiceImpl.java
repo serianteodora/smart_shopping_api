@@ -19,4 +19,14 @@ public class ShoppingItemsServiceImpl implements IShoppingItemsService {
 
         return shoppingItems;
     }
+
+    @Override
+    public void saveShoppingList(List<ShoppingItem> shoppingItems) {
+        shoppingItems.forEach(shoppingItem -> repository.save(shoppingItem));
+    }
+
+    @Override
+    public ShoppingItem saveShoppingItem(ShoppingItem shoppingItem) {
+        return repository.save(shoppingItem);
+    }
 }
