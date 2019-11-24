@@ -2,14 +2,14 @@ package com.orangejuice.SmartShoppingAPI.product.service;
 
 import org.springframework.stereotype.Service;
 
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-
 
 @Service
 public interface ProductService {
-    String getProductInformation(String product) throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException;
+    String getProductInformation(String product);
+
+    String getProductCategories();
+
+    String getStoresForProductsByLatLon(String lat, String lon, String buffer, String csvProdId);
 
     String getApis();
 }

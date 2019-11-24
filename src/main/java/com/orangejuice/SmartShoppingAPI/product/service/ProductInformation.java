@@ -6,23 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode
 @Getter
+@Setter
 @Builder
 public class ProductInformation {
 
     @JsonCreator
-    public ProductInformation(@JsonProperty("Items") String items,
-                              @JsonProperty("CatalogProduct") String catalogProduct,
-                              @JsonProperty("Id") String id) {
-        this.items = items;
-        this.catalogProduct = catalogProduct;
+    public ProductInformation(@JsonProperty("name") String name,
+                              @JsonProperty("id") String id) {
+        this.name = name;
         this.id = id;
     }
 
-    private String items;
-    private String catalogProduct;
+    private String name;
     private String id;
 //    @JsonProperty
 //    private String id;
