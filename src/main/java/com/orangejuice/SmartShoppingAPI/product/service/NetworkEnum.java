@@ -1,5 +1,7 @@
 package com.orangejuice.SmartShoppingAPI.product.service;
 
-public class NetworkService {
+public enum NetworkEnum {
+    AUCHAN,
+    CARREFOUR,
 
 }
