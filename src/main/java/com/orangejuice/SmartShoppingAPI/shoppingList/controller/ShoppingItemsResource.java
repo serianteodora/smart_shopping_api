@@ -1,6 +1,5 @@
 package com.orangejuice.SmartShoppingAPI.shoppingList.controller;
 
-import com.fasterxml.jackson.databind.deser.CreatorProperty;
 import com.orangejuice.SmartShoppingAPI.shoppingList.DomainToVOMappers;
 import com.orangejuice.SmartShoppingAPI.shoppingList.ShoppingItemVO;
 import com.orangejuice.SmartShoppingAPI.shoppingList.ShoppingListVO;
@@ -11,9 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
