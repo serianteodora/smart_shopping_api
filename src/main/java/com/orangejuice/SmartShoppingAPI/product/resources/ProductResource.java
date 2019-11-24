@@ -1,17 +1,14 @@
 package com.orangejuice.SmartShoppingAPI.product.resources;
 
-import com.orangejuice.SmartShoppingAPI.product.service.ProductInformation;
 import com.orangejuice.SmartShoppingAPI.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import java.util.List;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 public class ProductResource {
@@ -24,11 +21,20 @@ public class ProductResource {
 
     @GetMapping("/index")
     public String index() {
-        return "Greetings from Spring Boot!";
+        return productService.getApis();
     }
 
-//    @GetMapping("/{prodname}")
-//    public List<ProductInformation> getProductInformation(@RequestParam(name = "prodname", required = false, defaultValue = "lapte") String productName) {
-//        return productService.getProductInformation(productName);
-//    }
+    @GetMapping("/{prodname}")
+    public String getProductInformation(@PathVariable(name = "prodname", required = false) String productName) {
+        try {
+            return productService.getProductInformation(productName);
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
