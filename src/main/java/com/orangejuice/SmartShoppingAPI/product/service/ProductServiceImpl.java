@@ -7,6 +7,9 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -74,7 +77,22 @@ public class ProductServiceImpl implements ProductService {
         log.info("The URL for retrieving user information is {}", url);
 //        ResponseEntity<List<ProductInformation>> response = this.restTemplate.exchange(url.trim(), HttpMethod.GET, null,
 //                new ParameterizedTypeReference<List<ProductInformation>>() {}, product);
-        return this.restTemplate.getForObject(url, String.class, product);
+        String response = this.restTemplate.getForObject(url, String.class, product);
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(response);
+        }catch (JSONException err){
+            err.printStackTrace();
+        }
+        JSONArray resources = jsonObject.getJSONArray("Items");
+        for (int j = 0; j < resources.length(); j++) {
+            JSONObject resource = resources.getJSONObject(j);
+            //JSONObject fields = resource.getJSONObject("fields");
+            System.out.println(resource.get("id"));
+            System.out.println(resource.get("name"));
+        }
+
+        return response;
         //return response.getStatusCode().getReasonPhrase();//.getBody();
     }
 
